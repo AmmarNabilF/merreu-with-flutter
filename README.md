@@ -12,11 +12,12 @@ Pembelajaran ini dibimbing langsung oleh **Bapak Anton Prafanto** dan **Bapak Ib
 Di dalam folder utama `tugas-my-project`, terdapat **3 folder utama** yang berisi file `.dart` untuk latihan pembuatan aplikasi mobile.  
 Struktur dasarnya adalah sebagai berikut:
 
+```
 tugas-my-project/
 -- assets/images/
 -- lib/
 -- pubspec.yaml
-
+```
 ---
 
 ## ▶️ Cara Menjalankan File `.dart`
