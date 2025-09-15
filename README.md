@@ -8,7 +8,7 @@ Pembelajaran ini dibimbing langsung oleh **Bapak Anton Prafanto, S.Kom., M.T.** 
 ---
 
 ## 📂 Struktur Proyek tugas-my-project
-Folder ini berisi tugas pertama untuk membuat halaman profile sederhana
+Folder ini berisi tugas pertama untuk membuat halaman profile sederhana.
 Di dalam folder utama `tugas-my-project`, terdapat **3 folder utama** yang berisi file `.dart` untuk latihan pembuatan aplikasi mobile.  
 Struktur dasarnya adalah sebagai berikut:
 
