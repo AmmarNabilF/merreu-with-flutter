@@ -26,5 +26,5 @@ tugas-my-project/
    git clone https://github.com/username/tugas-my-project.git
 2. Salin dan tempel ketiga folder (android, ios, dan lib) dari tugas-my-project ke repositori atau local folder kalian.
 3. Jalankan project dengan menggunakan perintah:
-  ```bash
+   ```bash
    flutter run
