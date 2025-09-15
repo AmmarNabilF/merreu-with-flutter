@@ -13,9 +13,9 @@ Di dalam folder utama `tugas-my-project`, terdapat **3 folder utama** yang beris
 Struktur dasarnya adalah sebagai berikut:
 
 tugas-my-project/
-|-- assets/images/
-|-- lib/
-|-- pubspec.yaml
+-- assets/images/
+-- lib/
+-- pubspec.yaml
 
 ---
 
