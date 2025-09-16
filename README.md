@@ -9,7 +9,7 @@ Pembelajaran ini dibimbing langsung oleh **Bapak Anton Prafanto, S.Kom., M.T.** 
 
 ## 📂 Struktur Proyek tugas-my-project
 Folder ini berisi tugas pertama untuk membuat halaman profile sederhana.
-Di dalam folder utama `tugas-my-project`, terdapat **3 folder utama** yang berisi file `.dart` untuk latihan pembuatan aplikasi mobile.  
+Di dalam folder utama `tugas-my-project`, terdapat **2 folder utama dan 1 file**. Dari kedua folder utama terdapat satu folder yang bernama `lib` yang berisi file `.dart` untuk latihan pembuatan aplikasi mobile.  
 Struktur dasarnya adalah sebagai berikut:
 
 ```
@@ -25,7 +25,7 @@ tugas-my-project/
 1. Clone repositori ini (atau buat folder baru secara lokal).  
    ```bash
    git clone https://github.com/username/tugas-my-project.git
-2. Salin dan tempel ketiga folder (android, ios, dan lib) dari tugas-my-project ke repositori atau local folder kalian.
+2. Salin dan tempel dua folder dan file (assets, lib, dan pubspec.yaml) dari tugas-my-project ke repositori atau local folder kalian.
 3. Jalankan project dengan menggunakan perintah:
    ```bash
    flutter run
