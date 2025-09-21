@@ -165,6 +165,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     )
                   :
                     ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       itemCount: tasks.length,
                       itemBuilder: (context, index){
                         return Padding(
@@ -183,13 +184,22 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               ],
                             ),
                             child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.blue[100],
-                                child: Text(
-                                  '${index + 1}',
-                                  style: TextStyle(
-                                    color: Colors.blue[700],
-                                    fontWeight: FontWeight.bold,
+                              leading: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[100],
+                                  shape: BoxShape.circle,
+                                ),
+
+                                child: Center(
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: TextStyle(
+                                      color: Colors.blue[700],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -198,15 +208,24 @@ class _TodoListScreenState extends State<TodoListScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
                                 ),
                               ),
                               subtitle: Text(
-                                'Baru saja ditambahkan',
+                                'Task #${index + 1} >> Belum selesai',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[600],
                                 ),
-                              )
+                              ),
+                              trailing: Icon(
+                                Icons.radio_button_unchecked,
+                                color: Colors.grey[400],
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 8.0,
+                              ),
                             ),
                           ),
                         );
