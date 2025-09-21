@@ -9,7 +9,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       title: 'Todo App Pemula by CRUX',
       theme: ThemeData(primarySwatch: Colors.blue),
@@ -18,9 +17,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class TodoListScreen extends StatelessWidget {
+class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
 
+  @override
+  State<TodoListScreen> createState() => _TodoListScreenState();
+
+}
+
+class _TodoListScreenState extends State<TodoListScreen> {
+  List<String> tasks = [];
+  TextEditingController taskController = TextEditingController();
+  @override
+  void dispose() {
+    taskController.dispose();
+    super.dispose();
+  }
+
+  void addTask(){
+    String newTask = taskController.text.trim();
+
+    if (newTask.isNotEmpty) {
+      setState(() {
+        tasks.add(newTask);
+      });
+
+      taskController.clear();
+
+      debugPrint('Task ditambahkan: $newTask');
+      debugPrint('Total tasks sekarang: ${tasks.length}');
+      debugPrint('Semua tasks: $tasks');
+    }
+
+    else{
+      debugPrint('Task tidak boleh kosong');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +71,8 @@ class TodoListScreen extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
-                    decoration:InputDecoration(
+                    controller: taskController,
+                    decoration: InputDecoration(
                       hintText: 'Ketik task baru di sini...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
@@ -52,6 +85,7 @@ class TodoListScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        addTask();
                         debugPrint('Button ditekan!');
                       },
                       style: ElevatedButton.styleFrom(
@@ -78,6 +112,18 @@ class TodoListScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 20),
+            Text(
+              tasks.isEmpty
+              ? 'Belum ada tugas. Tambah tugas pertama kamu!'
+              : 'Kamu punya ${tasks.length} task${tasks.length > 1 ? 's' : ''}',
+
+              style: TextStyle(
+                fontSize: 16,
+                color: tasks.isEmpty ? Colors.grey[600] : Colors.blue[700],
+                fontWeight: FontWeight.w500,
+              )
+            )
           ],
         ),
       ),
