@@ -1,234 +1,151 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main(List<String> args) {
+  runApp(MyProfile());
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyProfile extends StatefulWidget {
+  const MyProfile({super.key});
+
+  @override
+  State<MyProfile> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
+  bool _isSwitching = true;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Profile Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
-      ),
-      home: const ProfilePage(),
       debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  bool following = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('My Profile'), centerTitle: true),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Header (foto + nama + tombol)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                    'https://i.pravatar.cc/300?img=12', // ganti dgn asset/image mu
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Ammar Nabil Fauzan',
-                        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Mobile & Web Developer • Tech Enthusiast',
-                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+      home: Scaffold(
+        backgroundColor: _isSwitching ? const Color(0xFF1C1C1E) : const Color.fromARGB(255, 240, 240, 240),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF2196F3),
+          elevation: 0,
+          title: Text(
+            "Profil Saya",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 12, 15, 0),
+                child: SizedBox(
+                  height: 88, 
+                  child: Stack(
+                    clipBehavior: Clip.none, 
+                    children: [        
+                      Positioned(
+                        right: 12,
+                        top: 20, 
+                        child: CupertinoSwitch(
+                          value: _isSwitching,
+                          activeColor: CupertinoColors.activeBlue, 
+                          onChanged: (bool v) {
+                            setState(() => _isSwitching = v);
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                FilledButton.icon(
-                  onPressed: () => setState(() => following = !following),
-                  icon: Icon(following ? Icons.check : Icons.person_add_alt),
-                  label: Text(following ? 'Following' : 'Follow'),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              CircleAvatar(radius: 50, backgroundImage: AssetImage("assets/images/Ash-baby.jpg")),
+              const SizedBox(height: 10),
+              Text(
+                "Ammar Nabil Fauzan",
+                style: TextStyle(
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold, 
+                  color: _isSwitching ? Colors.white : Colors.black),
+              ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 16),
-
-            // Bio singkat
-            Card(
-              elevation: 0,
-              color: theme.colorScheme.surfaceContainerHighest,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                  'Halo! Saya developer yang suka Flutter, backend ringan, dan ngulik UI/UX. '
-                  'Saat ini lagi fokus bikin aplikasi produktivitas mini dan eksperimen animasi.',
+              Container(
+                width: double.infinity,
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 25, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal : 20, vertical : 15),
+                color: _isSwitching ? const Color.fromARGB(255, 65, 65, 65) : const Color.fromARGB(255, 199, 199, 199),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Informasi",
+                      style: TextStyle(
+                        color: Color(0xFF2196F3),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text("08125381xxx", style: TextStyle(color: _isSwitching ? Colors.white : Colors.black, fontSize: 15)),
+                    const SizedBox(height: 5),
+                    Text("Nomor HP gweh", style: TextStyle(color:_isSwitching ? const Color.fromARGB(255, 160, 160, 160) : const Color.fromARGB(255, 59, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    Text("2309106006", style: TextStyle(color:_isSwitching ? Colors.white : Colors.black, fontSize: 15)),
+                    const SizedBox(height: 5),
+                    Text("NIM", style: TextStyle(color:_isSwitching ? const Color.fromARGB(255, 160, 160, 160) : const Color.fromARGB(255, 59, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Belajar, Bermain, Masak",
+                      style: TextStyle(color:_isSwitching ? Colors.white : Colors.black, fontSize: 15),
+                    ),
+                    const SizedBox(height: 5),
+                    Text("Hobi gweh", style: TextStyle(color:_isSwitching ? const Color.fromARGB(255, 160, 160, 160) : const Color.fromARGB(255, 59, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+                    Text("@marrrnf_", style: TextStyle(color:_isSwitching ? Colors.white : Colors.black, fontSize: 15)),
+                    const SizedBox(height: 5),
+                    Text("Instagram", style: TextStyle(color:_isSwitching ? const Color.fromARGB(255, 160, 160, 160) : const Color.fromARGB(255, 59, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+                    Text("AmmarNabilF", style: TextStyle(color:_isSwitching ? Colors.white : Colors.black, fontSize: 15)),
+                    const SizedBox(height: 5),
+                    Text("GitHub", style: TextStyle(color:_isSwitching ?const Color.fromARGB(255, 160, 160, 160) : const Color.fromARGB(255, 59, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+                  ],
                 ),
               ),
-            ),
 
-            const SizedBox(height: 16),
-
-            // Statistik
-            Row(
-              children: const [
-                _StatItem(value: '24', label: 'Repos'),
-                _DividerDot(),
-                _StatItem(value: '1.2k', label: 'Followers'),
-                _DividerDot(),
-                _StatItem(value: '180', label: 'Following'),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // Keterampilan / tags
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: const [
-                _SkillChip('Flutter'),
-                _SkillChip('Dart'),
-                _SkillChip('Firebase'),
-                _SkillChip('REST API'),
-                _SkillChip('UI/UX'),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-
-            // Kontak / tautan
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: theme.colorScheme.outlineVariant),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: [
+                    Text("Tidak ada postingan", style: TextStyle(color: _isSwitching ? Colors.grey: Colors.black, fontSize: 16)),
+                    Text(
+                      "Ini bukan keahlian saya, mohon maaf jika tidak bagus xixi",
+                      style: TextStyle(color: _isSwitching ? Colors.grey: Colors.black, fontSize: 16),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Posting foto dan video untuk ditampilkan",
+                      style: TextStyle(color: _isSwitching ? Colors.grey: Colors.black, fontSize: 13),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                children: const [
-                  ListTile(
-                    leading: Icon(Icons.email_outlined),
-                    title: Text('ammar@example.com'),
-                    subtitle: Text('Email'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.link),
-                    title: Text('github.com/ammar'),
-                    subtitle: Text('GitHub'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.location_on_outlined),
-                    title: Text('Samarinda, Indonesia'),
-                    subtitle: Text('Location'),
-                  ),
-                ],
-              ),
-            ),
 
-            const SizedBox(height: 24),
-
-            // Tombol aksi
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.message_outlined),
-                    label: const Text('Message'),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.camera_alt, color: Colors.white),
+                  label: const Text(
+                    "Tambah postingan",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.work_outline),
-                    label: const Text('Hire Me'),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  final String value;
-  final String label;
-  const _StatItem({required this.value, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            Text(value, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 2),
-            Text(label, style: theme.textTheme.bodySmall),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DividerDot extends StatelessWidget {
-  const _DividerDot();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(width: 8, child: Center(child: Text('·')));
-  }
-}
-
-class _SkillChip extends StatelessWidget {
-  final String label;
-  const _SkillChip(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Chip(
-      label: Text(label),
-      avatar: const Icon(Icons.code, size: 16),
-      side: BorderSide(color: theme.colorScheme.outlineVariant),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
   }
 }
