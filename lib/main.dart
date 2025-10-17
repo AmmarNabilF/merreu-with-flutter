@@ -1,8 +1,10 @@
+import 'dart:io'; // <— diperlukan untuk File
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main(List<String> args) {
-  runApp(MyProfile());
+  runApp(const MyProfile());
 }
 
 class MyProfile extends StatefulWidget {
@@ -15,16 +17,45 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   bool _isSwitching = true;
 
+  // --- Tambahan: state avatar & file terpilih ---
+  final List<String> _avatars = [
+    "assets/images/Ash-baby.jpg",
+    "assets/images/Ash-teen.jpg",
+    "assets/images/Ash-master.jpg",
+  ];
+  int _avatarIndex = 0;
+  File? _pickedFile;
+
+  // void _nextAvatar() {
+  //   setState(() {
+  //     _avatarIndex = (_avatarIndex + 1) % _avatars.length;
+  //     _pickedFile = null; // opsional: reset jika sebelumnya pilih dari galeri
+  //   });
+  // }
+
+  Future<void> _pickFromGallery() async {
+    final x = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+    if (x != null) {
+      setState(() => _pickedFile = File(x.path));
+    }
+  }
+  // --- end tambahan ---
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: _isSwitching ? const Color(0xFF1C1C1E) : const Color.fromARGB(255, 240, 240, 240),
+        backgroundColor: _isSwitching
+            ? const Color(0xFF1C1C1E)
+            : const Color.fromARGB(255, 240, 240, 240),
         appBar: AppBar(
           backgroundColor: const Color(0xFF2196F3),
           elevation: 0,
-          title: Text(
+          title: const Text(
             "Profil Saya",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -36,16 +67,16 @@ class _MyProfileState extends State<MyProfile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 12, 15, 0),
                 child: SizedBox(
-                  height: 88, 
+                  height: 88,
                   child: Stack(
-                    clipBehavior: Clip.none, 
-                    children: [        
+                    clipBehavior: Clip.none,
+                    children: [
                       Positioned(
                         right: 12,
-                        top: 20, 
+                        top: 20,
                         child: CupertinoSwitch(
                           value: _isSwitching,
-                          activeColor: CupertinoColors.activeBlue, 
+                          activeColor: CupertinoColors.activeBlue,
                           onChanged: (bool v) {
                             setState(() => _isSwitching = v);
                           },
@@ -56,21 +87,30 @@ class _MyProfileState extends State<MyProfile> {
                 ),
               ),
               const SizedBox(height: 20),
-              CircleAvatar(radius: 50, backgroundImage: AssetImage("assets/images/Ash-baby.jpg")),
+
+              // Avatar: prioritas file galeri, fallback ke asset list
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: _pickedFile != null
+                    ? FileImage(_pickedFile!)
+                    : AssetImage(_avatars[_avatarIndex]) as ImageProvider,
+              ),
+
               const SizedBox(height: 10),
               Text(
                 "Ammar Nabil Fauzan",
                 style: TextStyle(
-                  fontSize: 20, 
-                  fontWeight: FontWeight.bold, 
-                  color: _isSwitching ? Colors.white : Colors.black),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: _isSwitching ? Colors.white : Colors.black,
+                ),
               ),
               const SizedBox(height: 20),
 
               Container(
                 width: double.infinity,
                 margin: EdgeInsetsDirectional.symmetric(horizontal: 25, vertical: 5),
-                padding: EdgeInsets.symmetric(horizontal : 20, vertical : 15),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 color: _isSwitching ? const Color.fromARGB(255, 65, 65, 65) : const Color.fromARGB(255, 199, 199, 199),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,18 +168,22 @@ class _MyProfileState extends State<MyProfile> {
 
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  ),
-                  onPressed: () {},
-                  icon: const Icon(Icons.camera_alt, color: Colors.white),
-                  label: const Text(
-                    "Tambah postingan",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Tombol pilih dari galeri
+                    CupertinoButton(
+                      color: CupertinoColors.activeBlue,
+                      child: const Text('Ubah Foto Profil', style: TextStyle(color: Colors.white)),
+                      onPressed: _pickFromGallery,
+                    ),
+                    const SizedBox(width: 12),
+                    // Tombol next asset (opsional)
+                    // CupertinoButton(
+                    //   child: const Text('Next Avatar'),
+                    //   onPressed: _nextAvatar,
+                    // ),
+                  ],
                 ),
               ),
             ],
